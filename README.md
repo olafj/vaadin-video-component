@@ -1,6 +1,9 @@
+**!! WORK IN PROGRESS !!**
+
+
 # Paper Slider
 
-Vaadin 14 Java integration of @polymer/paper-slider
+Vaadin 14 Java integration of HTML Video-Tah
 
 ## Development instructions
 
