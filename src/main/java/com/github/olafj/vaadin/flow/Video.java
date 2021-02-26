@@ -16,10 +16,14 @@ import java.nio.file.Path;
 public class Video extends HtmlContainer {
 
     private static final PropertyDescriptor<String, String> PRELOAD_PROPERTY_DESCRIPTOR = PropertyDescriptors
-            .attributeWithDefault(VideoAttributes.Preload, VideoAttributes.PreloadType.Auto);
+            .attributeWithDefault(VideoAttributes.Preload, PreloadType.Auto);
 
     public Video() {
         super();
+    }
+
+    protected String getVideoSourceAttributeName() {
+        return VideoAttributes.Source;
     }
 
     @Override
@@ -43,11 +47,11 @@ public class Video extends HtmlContainer {
     }
 
     public void setSource(String url) {
-        this.getElement().setAttribute(VideoAttributes.Source, url);
+        this.getElement().setAttribute(this.getVideoSourceAttributeName(), url);
     }
 
     public void setSource(AbstractStreamResource streamResource) {
-        this.getElement().setAttribute(VideoAttributes.Source, streamResource);
+        this.getElement().setAttribute(this.getVideoSourceAttributeName(), streamResource);
     }
 
     public void setSource(File file) {
@@ -141,11 +145,12 @@ public class Video extends HtmlContainer {
         String Width = "width";
         String Height = "height";
 
-        interface PreloadType {
-            String Auto = "auto";
-            String MetaData = "metadata";
-            String None = "none";
-        }
+    }
+
+    public interface PreloadType {
+        String Auto = "auto";
+        String MetaData = "metadata";
+        String None = "none";
     }
 
 }

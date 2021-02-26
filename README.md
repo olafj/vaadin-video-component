@@ -11,3 +11,6 @@ video.setPosterSource(Paths.get("./target/test-classes/cover.jpeg"));<br/>
 
 aContainer.add(video);
 </code>
+
+Additional class BlobSourceVideo fetches video fully as blob, so seeking is available
+
