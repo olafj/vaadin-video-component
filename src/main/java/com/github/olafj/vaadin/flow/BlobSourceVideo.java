@@ -22,24 +22,13 @@ public class BlobSourceVideo extends Video {
     @Override
     public void setSource(String url) {
         super.setSource(url);
-
-        if(url != null && !"".equals(url)) {
-            this.loadBlobSource();
-        } else {
-            this.getElement().removeAttribute(BLOB_SOURCE);
-        }
-
+        this.loadBlobSource();
     }
 
     @Override
     public void setSource(AbstractStreamResource streamResource) {
         super.setSource(streamResource);
-        
-        if(streamResource != null) {
-            this.loadBlobSource();
-        } else {
-            this.getElement().removeAttribute(BLOB_SOURCE);
-        }
+        this.loadBlobSource();
     }
 
     private void loadBlobSource() {
