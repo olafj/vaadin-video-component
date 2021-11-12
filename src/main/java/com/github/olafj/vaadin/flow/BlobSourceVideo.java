@@ -1,8 +1,11 @@
 package com.github.olafj.vaadin.flow;
 
-import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.*;
+import com.vaadin.flow.component.dependency.JavaScript;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.function.SerializableConsumer;
 import com.vaadin.flow.server.AbstractStreamResource;
+import com.vaadin.flow.shared.Registration;
 
 /***
  *
@@ -10,6 +13,7 @@ import com.vaadin.flow.server.AbstractStreamResource;
  * so seeking is available after load.
  *
  */
+@JavaScript("./com_github_olafj_vaadin_flow_BlobSourceVideo.js")
 public class BlobSourceVideo extends Video {
 
     private static final String BLOB_SOURCE = "blob-src";
@@ -35,10 +39,7 @@ public class BlobSourceVideo extends Video {
 
         this.runBeforeClientResponse(ui -> {
             this.getElement().executeJs(
-                    "fetch(this.getAttribute('blob-src'), { method: 'GET' })" +
-                                ".then(response => response.blob())" +
-                                ".then(value => this.src = URL.createObjectURL(value))" +
-                                ".finally(this.removeAttribute('blob-src'));");
+                    "window.com_github_olafj_vaadin_flow_BlobSourceVideo_loadSource(this)");
         });
 
     }
@@ -46,5 +47,17 @@ public class BlobSourceVideo extends Video {
     private void runBeforeClientResponse(SerializableConsumer<UI> command) {
         getElement().getNode().runWhenAttached(ui -> ui
                 .beforeClientResponse(this, context -> command.accept(ui)));
+    }
+
+    public Registration addBlobSourceLoadedListener(ComponentEventListener<BlobSourceLoadedEvent> eventListener) {
+        return ComponentUtil.addListener(this, BlobSourceLoadedEvent.class, eventListener);
+    }
+
+    @DomEvent("blob-src-loaded")
+    public static class BlobSourceLoadedEvent extends ComponentEvent<BlobSourceVideo> {
+
+        public BlobSourceLoadedEvent(BlobSourceVideo source, boolean fromClient) {
+            super(source, fromClient);
+        }
     }
 }

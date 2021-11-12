@@ -3,7 +3,7 @@
 
     <groupId>com.github.olafj</groupId>
     <artifactId>video-tag-java</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>video-tag-java</name>
     <description>Integration of HTML-Video-Tag for Vaadin Flow</description>
 
